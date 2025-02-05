@@ -11,13 +11,14 @@ info:
 servers:
 - url: http://127.0.0.1:5000/
 tags:
-- name: Listenverwaltung
+- name: Listenverwaltung Listen
+- name: Listenverwaltung Einträge
 paths:
   /todo-list/{list_id}/entries:
     get:
       tags:
-      - 
-      summary: Get all items from list
+      - Listenverwaltung Einträge
+      summary: Liefert alle Einträge einer Todo-Liste zurück.
       operationId: getList
       parameters:
       - name: list_id
@@ -41,8 +42,8 @@ paths:
   /todo-list/{list_id}:  
     delete:
       tags:
-      - 
-      summary: Delete a list
+      - Listenverwaltung Listen
+      summary: Löscht eine komplette Todo-Liste mit allen Einträgen.
       operationId: deleteList
       parameters:
       - name: list_id
@@ -60,8 +61,8 @@ paths:
           content: {}
     get:
       tags:
-      - 
-      summary: Delete a list
+      - Listenverwaltung Listen
+      summary: Liefert eine Liste zurück.
       operationId: deleteList
       parameters:
       - name: list_id
@@ -80,8 +81,8 @@ paths:
   /todo-list:  
     post:
       tags:
-      - 
-      summary: 
+      - Listenverwaltung Listen
+      summary: Fügt einen Eintrag zu einer bestehenden Todo-Liste hinzu.
       operationId: 
       parameters:
       - name: list_id
@@ -100,8 +101,8 @@ paths:
   /todo-list/{list_id}/entry:  
     delete:
       tags:
-      - 
-      summary: Delete  list
+      - Listenverwaltung Einträge
+      summary: Aktualisiert einen bestehenden Eintrag. 
       operationId: deleteList
       parameters:
       - name: list_id
@@ -120,8 +121,8 @@ paths:
   /todo-list/{list_id}/entry/{entry_id}:  
     delete:
       tags:
-      - Listenverwaltung
-      summary: Delete a list
+      - Listenverwaltung Einträge
+      summary: Löscht einen einzelnen Eintrag einer TodoListe.
       operationId: deleteList
       parameters:
       - name: list_id
@@ -140,8 +141,8 @@ paths:
   /todo-lists:  
     get:
       tags:
-      - Listenverwaltung
-      summary: Delete a list
+      - Listenverwaltung Listen
+      summary: Liefert alle Todo-Listen zurück.
       operationId: deleteList
       parameters:
       - name: list_id
