@@ -7,7 +7,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.1.0
+  version: 0.1.1
 servers:
 - url: http://127.0.0.1:5000/
 tags:
@@ -19,17 +19,17 @@ paths:
       tags:
       - Listenverwaltung Einträge
       summary: Liefert alle Einträge einer Todo-Liste zurück.
-      operationId: getList
+      operationId: getListEntries
       parameters:
       - name: list_id
         in: path
-        description: list id
+        description: ID der gewünschten Liste
         required: true
         schema:
           type: string
       responses:
         200:
-          description: List item returned
+          description: Liste der Einträge
           content:
             application/json:
               schema:
@@ -37,9 +37,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/TodoEntry'
         404:
-          description: Invalid list id
-          content: {}
-  /todo-list/{list_id}:  
+          description: Liste nicht gefunden
+  /todo-list/{list_id}:
     delete:
       tags:
       - Listenverwaltung Listen
@@ -48,116 +47,90 @@ paths:
       parameters:
       - name: list_id
         in: path
-        description: list id
+        description: ID der gewünschten Liste
         required: true
         schema:
           type: string
       responses:
         200:
-          description: List was deleted
-          content: {}
+          description: Liste erfolgreich gelöscht
         404:
-          description: Invalid list id
-          content: {}
+          description: Liste nicht gefunden
     get:
       tags:
       - Listenverwaltung Listen
-      summary: Liefert eine Liste zurück.
-      operationId: deleteList
+      summary: Liefert eine spezifische Todo-Liste zurück.
+      operationId: getList
       parameters:
       - name: list_id
         in: path
-        description: list id
+        description: ID der gewünschten Liste
         required: true
         schema:
           type: string
       responses:
         200:
-          description: List was deleted
-          content: {}
+          description: Details der Todo-Liste
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoList'
         404:
-          description: Invalid list id
-          content: {}
-  /todo-list:  
+          description: Liste nicht gefunden
+  /todo-list:
     post:
       tags:
       - Listenverwaltung Listen
+      summary: Erstellt eine neue Todo-Liste.
+      operationId: createList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoList'
+      responses:
+        201:
+          description: Liste erfolgreich erstellt
+  /todo-list/{list_id}/entry:
+    post:
+      tags:
+      - Listenverwaltung Einträge
       summary: Fügt einen Eintrag zu einer bestehenden Todo-Liste hinzu.
-      operationId: 
+      operationId: addEntry
       parameters:
       - name: list_id
         in: path
-        description: list id
+        description: ID der gewünschten Liste
         required: true
         schema:
           type: string
-      responses:
-        200:
-          description: List was deleted
-          content: {}
-        404:
-          description: Invalid list id
-          content: {}
-  /todo-list/{list_id}/entry:  
-    delete:
-      tags:
-      - Listenverwaltung Einträge
-      summary: Aktualisiert einen bestehenden Eintrag. 
-      operationId: deleteList
-      parameters:
-      - name: list_id
-        in: path
-        description: list id
+      requestBody:
         required: true
-        schema:
-          type: string
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoEntry'
       responses:
-        200:
-          description: List was deleted
-          content: {}
-        404:
-          description: Invalid list id
-          content: {}
-  /todo-list/{list_id}/entry/{entry_id}:  
-    delete:
-      tags:
-      - Listenverwaltung Einträge
-      summary: Löscht einen einzelnen Eintrag einer TodoListe.
-      operationId: deleteList
-      parameters:
-      - name: list_id
-        in: path
-        description: list id
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: List was deleted
-          content: {}
-        404:
-          description: Invalid list id
-          content: {}
-  /todo-lists:  
+        201:
+          description: Eintrag erfolgreich hinzugefügt
+        400:
+          description: Fehlerhafte Anfrage
+  /todo-lists:
     get:
       tags:
       - Listenverwaltung Listen
       summary: Liefert alle Todo-Listen zurück.
-      operationId: deleteList
-      parameters:
-      - name: list_id
-        in: path
-        description: list id
-        required: true
-        schema:
-          type: string
+      operationId: getAllLists
       responses:
         200:
-          description: List was deleted
-          content: {}
-        404:
-          description: Invalid list id
-          content: {}
+          description: Liste aller Todo-Listen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TodoList'
 components:
   schemas:
     TodoList:
@@ -178,9 +151,3 @@ components:
           type: string
         description:
           type: string
-        user_id:
-          type: string
-          format: uuid
-        list_id:
-          type: string
-          format: uuid
