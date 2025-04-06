@@ -36,7 +36,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TodoEntry'
-        404:
+        400:
           description: falsche ID
           content: {}
         405:
@@ -66,8 +66,8 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/success'
-        404:
+                  $ref: 
+        400:
           description: falsche ID
           content: {}
         405:
@@ -97,7 +97,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TodoEntry'
-        404:
+        400:
           description: falsche ID
           content: {}
         405:
@@ -164,7 +164,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TodoEntry'
-        404:
+        400:
           description: falsche ID
           content: {}
         405:
