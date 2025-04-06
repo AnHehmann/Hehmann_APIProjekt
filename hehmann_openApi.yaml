@@ -65,8 +65,6 @@ paths:
             application/json:
               schema:
                 type: object
-                items:
-                  $ref: 
         400:
           description: falsche ID
           content: {}
